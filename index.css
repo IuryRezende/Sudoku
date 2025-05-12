@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 16px;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    color: white;
+    background-color: burlywood;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button{
+    display: flex;
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+
+.sudoku{
+    border-collapse: collapse;
+}
+
+.sudoku td{
+    border: 1px solid black;
+    padding: 0px;
+    border-collapse: collapse;
+}
+
+.sudoku tr td input{
+    color: black;
+    font-weight: 600;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+}
+
+
+.sudoku tr td input:focus{
+    background-color: rgba(165, 42, 42, 0.5);
+}
+
+
+
+
+
