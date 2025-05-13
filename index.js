@@ -1,10 +1,29 @@
 const sudoku = document.querySelector(".sudoku");
 function random()
 {
-    return Math.trunc(Math.random() * 8);
+    return Math.trunc(Math.random() * 9) + 1;
 }
 
-document.getElementById("start").addEventListener("click", () =>{ 
+function validNumberAxisY(Allrows, currentRow, columnIndex, value)
+{
+    for (let i = 0; i < Allrows.length; i++)
+    {
+        const input = Allrows[i].querySelectorAll("input")[columnIndex];
+        if (input !== currentRow[columnIndex] && input.value === value)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+function validNumberAxisX(Allcolumns, currentColumn, rowIndex, value)
+{
+
+}
+
+document.getElementById("start").addEventListener("click", () =>{
+    sudoku.innerHTML = "";
     for (let i = 0; i < 9; i++)
     {
         const row = document.createElement("tr");
@@ -29,20 +48,27 @@ document.getElementById("start").addEventListener("click", () =>{
         }
         sudoku.appendChild(row);
     }
-    const inputs = document.querySelectorAll("input");
-    const boxGrid = [[]];
 
-    for(let i = 0; i < inputs.length; i++)
-    {
-        let linha = 0;
-        if (i == 9 || i == 18 || i =)
-    }
-    document.querySelectorAll("tr").forEach((_, index) =>
-    {
-        for (let i = 0; i < 9; i++)
-        {
-            inputs[index].value = random();
-        }
+    const rows = document.querySelectorAll(".sudoku tr");
+
+    rows.forEach((row, rowIndex) => {
+        const inputs = row.querySelectorAll("input");
+
+        inputs.forEach((input, colIndex) => {
+            const luckyBox = random();
+            if (luckyBox <= 2)
+            {
+                input.value = random();
+                while (!validNumberAxisY(rows, inputs, colIndex, input.value))
+                {
+                    input.value = random();
+                }
+            }
+            else{
+                input.value = null;
+            }
+            console.log(`[${rowIndex}][${colIndex}] value = ${input.value}`);
+        })
     })
 })
 
