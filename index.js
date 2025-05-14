@@ -6,7 +6,6 @@ function random()
 
 function validNumberAxisY(AllRows, currentInput, columnIndex, value)
 {
-    //currentInput = todas as colunas
     for (let i = 0; i < AllRows.length; i++)
     {
         const input = AllRows[i].querySelectorAll("input")[columnIndex];
@@ -29,6 +28,26 @@ function validNumberAxisX(Allcolumns, currentRow, columnIndex, value)
             return false;    
         } 
 
+    }
+    return true;
+}
+
+function validNumberBlock(AllRows, atualCell, rowIndex, columnIndex){
+    const startColumn = Math.floor(columnIndex/3) * 3;
+    const startRow = Math.floor(rowIndex/3) * 3;
+    const cell = atualCell.querySelectorAll("input")[columnIndex];
+    
+    for(let i = startColumn; i < (startColumn + 3); i++)
+    {
+        for (let j = startRow; j < (startRow + 3); j++)
+        {
+            const input = AllRows[i].querySelectorAll("input")[j];
+            if (input !== cell && input.value === cell.value)
+            {
+                
+                return false;
+            }
+        }
     }
     return true;
 }
@@ -67,13 +86,14 @@ document.getElementById("start").addEventListener("click", () =>{
 
         inputs.forEach((input, colIndex) => {
             const luckyBox = random();
-            if (luckyBox <= 2)
+            if (luckyBox <= 1)
             {
                 input.value = random();
-                while(!validNumberAxisY(rows, inputs, colIndex, input.value) || !validNumberAxisX(inputs, row, colIndex, input.value))
+                while(!validNumberAxisY(rows, inputs, colIndex, input.value) || !validNumberAxisX(inputs, row, colIndex, input.value) || !validNumberBlock(rows, row, rowIndex, colIndex))
                 {
                     input.value = random();
                 }
+                input.style.backgroundColor = "rgba(136, 136, 136, 0.4)";
             }
             else{
                 input.value = null;
