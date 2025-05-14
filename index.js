@@ -4,12 +4,13 @@ function random()
     return Math.trunc(Math.random() * 9) + 1;
 }
 
-function validNumberAxisY(Allrows, currentRow, columnIndex, value)
+function validNumberAxisY(AllRows, currentInput, columnIndex, value)
 {
-    for (let i = 0; i < Allrows.length; i++)
+    //currentInput = todas as colunas
+    for (let i = 0; i < AllRows.length; i++)
     {
-        const input = Allrows[i].querySelectorAll("input")[columnIndex];
-        if (input !== currentRow[columnIndex] && input.value === value)
+        const input = AllRows[i].querySelectorAll("input")[columnIndex];
+        if (input !== currentInput[columnIndex] && input.value === value)
         {
             return false;
         }
@@ -17,9 +18,19 @@ function validNumberAxisY(Allrows, currentRow, columnIndex, value)
     return true;
 }
 
-function validNumberAxisX(Allcolumns, currentColumn, rowIndex, value)
+function validNumberAxisX(Allcolumns, currentRow, columnIndex, value)
 {
+    for (let i = 0; i < Allcolumns.length; i++)
+    {
+        const input = currentRow.querySelectorAll("input")[i];
+        const currentInput = currentRow.querySelectorAll("input")[columnIndex];
+        if (input !== currentInput && input.value === value)
+        {
+            return false;    
+        } 
 
+    }
+    return true;
 }
 
 document.getElementById("start").addEventListener("click", () =>{
@@ -59,7 +70,7 @@ document.getElementById("start").addEventListener("click", () =>{
             if (luckyBox <= 2)
             {
                 input.value = random();
-                while (!validNumberAxisY(rows, inputs, colIndex, input.value))
+                while(!validNumberAxisY(rows, inputs, colIndex, input.value) || !validNumberAxisX(inputs, row, colIndex, input.value))
                 {
                     input.value = random();
                 }
@@ -67,8 +78,6 @@ document.getElementById("start").addEventListener("click", () =>{
             else{
                 input.value = null;
             }
-            console.log(`[${rowIndex}][${colIndex}] value = ${input.value}`);
         })
     })
 })
-
