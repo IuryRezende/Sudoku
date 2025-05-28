@@ -1,4 +1,5 @@
 const sudoku = document.querySelector(".sudoku");
+const btnCheck = document.getElementById("check");
 let AllRows;
 let AllColumns;
 
@@ -14,10 +15,11 @@ function isColumnValid(currentRow, currentColumn)
     for (let i = 0; i < AllRows.length; i++)
     {
         const input = AllRows[i].querySelectorAll("input")[currentColumn];
-        if (input !== currentInput && input.value === currentInput.value)
+        if (input !== currentInput && input.value !== "" && input.value === currentInput.value)
         {
             return false;
         }
+        
     }
     return true;
 }
@@ -28,11 +30,10 @@ function isRowValid(currentRow, currentColumn)
     for (let i = 0; i < AllColumns.length; i++)
     {
         const input = currentRow.querySelectorAll("input")[i];
-        if (input !== currentInput && input.value === currentInput.value)
+        if (input !== currentInput && input.value !== "" && input.value === currentInput.value)
         {
             return false;    
         } 
-            
     }
     return true;
 }
@@ -47,7 +48,8 @@ function isBlockValid(atualCell, rowIndex, columnIndex){
         for (let j = startColumn; j < (startColumn + 3); j++)
         {
             const input = AllRows[i].querySelectorAll("input")[j];
-            if (input !== cell && input.value === cell.value)
+            
+            if (input !== cell && input.value !== "" && input.value === cell.value)
             {
                 return false;
             }
@@ -117,10 +119,26 @@ document.getElementById("start").addEventListener("click", () =>{
 
 })
 
-// document.addEventListener("keydown", (e) => {
-//     const isLetter = /^[a-z]/g.test(e.key);
-//     if (isLetter)
-//         {
-//         console.log(userCells);
-//     }
-// })
+btnCheck.addEventListener("click", () => {
+    AllRows.forEach((currentRow, rowIndex) => {
+        AllColumns = currentRow.querySelectorAll("input")
+        AllColumns.forEach((column, colIndex) => {
+            const computedStyle = window.getComputedStyle(column)
+            if (!isAllValid(currentRow, rowIndex, colIndex))
+            {
+                if (computedStyle.pointerEvents != "none")
+                {
+                    column.style.backgroundColor = "red";
+                    column.style.color = "white";
+                }
+            }
+            else{
+                if (computedStyle.pointerEvents != "none" && column.value !== "")
+                {
+                    column.style.backgroundColor = "green";
+                    column.style.color = "white";
+                }
+            }
+        }) 
+    })
+})
